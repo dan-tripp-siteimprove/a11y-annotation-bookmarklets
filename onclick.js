@@ -12,7 +12,7 @@ javascript: (function() {
 			
 				function output(){ 
 					var e = $._data(this).events,
-						str = "All Events"
+						str = "All Events" 
 					$.each(e,function(i,v){
 						str+="\n" + i + ":" + v.toString();
 						$.each(v,function(ii,vv){

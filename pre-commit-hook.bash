@@ -29,7 +29,7 @@ set -o errtrace
 # You might get an error such as "Uncaught SyntaxError: missing } after function body".
 # The ':' part is there so that we don't match URLs eg. 'http://'.  
 !(grep -E '(^|[^:])//([^/]|$)' *.js 2>&1)
-
+if [ "$?" != 0 ] ; then false ; fi
 
 # This is here so that I don't repeat the mistake of 2023-11-01 which cost me ~ 15 minutes. 
 # the SVG parse was breaking b/c some of my SVG/HTML multe-line literal strings 
@@ -55,10 +55,11 @@ set -o errtrace
 # """
 # ... and the elements tree in devtools showed <html> elements as children of <body>. 
 !(cat *.js | dos2unix | grep --text -E '["'"'"']$')
-
+if [ "$?" != 0 ] ; then false ; fi
 
 # grep for "tdr".  "tdr" means "to do: remove".  this is a comment that I add 
 # to code that I don't intend to commit. 
 !(grep tdr *.js 2>&1)
+if [ "$?" != 0 ] ; then false ; fi
 
 
