@@ -62,7 +62,7 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 				insertAsFirstChild(foundElem, "<strong class=\"openSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;h2&gt;</strong>");
 				insertAsLastChild(foundElem, "<strong class=\"closeSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;/h2&gt;</strong>");
 			}
-		
+		 
 			$("script[src$='headings.js']").remove();
 			s.remove();
         }

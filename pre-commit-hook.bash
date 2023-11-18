@@ -28,9 +28,7 @@ set -o errtrace
 # until the end of the file.  
 # You might get an error such as "Uncaught SyntaxError: missing } after function body".
 # The ':' part is there so that we don't match URLs eg. 'http://'.  
-if [[ "$(grep -E '(^|[^:])//([^/]|$)' *.js 2>&1)" != "" ]] ; then 
-	false
-fi
+!(grep -E '(^|[^:])//([^/]|$)' *.js 2>&1)
 
 
 # This is here so that I don't repeat the mistake of 2023-11-01 which cost me ~ 15 minutes. 
@@ -56,14 +54,11 @@ fi
 # Below is a rendering of the page up to the first error.
 # """
 # ... and the elements tree in devtools showed <html> elements as children of <body>. 
-if [[ "$(cat *.js | dos2unix | grep --text -E '["'"'"']$')" != "" ]] ; then
-	false
-fi
+!(cat *.js | dos2unix | grep --text -E '["'"'"']$')
 
 
 # grep for "tdr".  "tdr" means "to do: remove".  this is a comment that I add 
 # to code that I don't intend to commit. 
-if [[ "$(grep tdr *.js 2>&1)" != "" ]] ; then 
-	false
-fi
+!(grep tdr *.js 2>&1)
+
 
