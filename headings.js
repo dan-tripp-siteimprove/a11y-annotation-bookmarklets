@@ -2,39 +2,37 @@ javascript:
 var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 (async function (bookmarkletVars) {
 
-	function findElements(selector_) {
-
-		function getShadowRoots(node_, returnValShadowRoots_) {
-			if (node_.shadowRoot) {
-				returnValShadowRoots_.push(node_.shadowRoot);
+	const UNIQUE_ID_FOR_THIS_BOOKMARKLET = '3394c278_f9fa_4a37_837f_c3e1b16a2c1f';
+	const cssClassNameFOrTheElementsAddedByThisBookmarklet = `class_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
+	
+	function getRootsForQuerySelector() {
+		let r = [document.body];
+		function findShadowRoots(node__) {
+			if (node__.shadowRoot) {
+				r.push(node__.shadowRoot);
 			}
-
-			for (const childNode of node_.childNodes) {
+			for (const childNode of node__.childNodes) {
 				if (childNode.nodeType === Node.ELEMENT_NODE) {
-					getShadowRoots(childNode, returnValShadowRoots_);
+					findShadowRoots(childNode);
 				}
 			}
 		}
+		findShadowRoots(document.body);
+		return r;
+	}
 
-		let roots = [document.body];
-
-		getShadowRoots(document.body, roots);
-
+	function findElements(selector_, rootsForQuerySelector_) {
 		let r = [];
-		for(let root of roots) {
-			r.push(...root.querySelectorAll(selector_));
+		for(let rootForQuerySelector of rootsForQuerySelector_) {
+			r.push(...rootForQuerySelector.querySelectorAll(selector_));
 		}
 		return r;
-
 	}
 
 	function parseHtmlElementStr(str_) {
 		const parser = new DOMParser();
-
 		const parsedDocument = parser.parseFromString(str_, 'text/html');
-
 		const r = parsedDocument.body.firstChild;
-
 		return r;
 	}
 
@@ -48,30 +46,32 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 		targetElem_.appendChild(newElem);
 	}
 
+    function run() {
+		let rootsForQuerySelector = getRootsForQuerySelector();
 
+		for(let foundElem of findElements(`.${cssClassNameFOrTheElementsAddedByThisBookmarklet}`, 
+				rootsForQuerySelector)) {
+			foundElem.remove();
+		}
 
-    function callback() {
-        function l() {
-			
-			for(let foundElem of findElements('h1')) {;
-				insertAsFirstChild(foundElem, "<strong class=\"openSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;h1&gt;</strong>");
-				insertAsLastChild(foundElem, "<strong class=\"closeSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;/h1&gt;</strong>");
+		let selectors = ["h1", "h2", "h3", "h4", "h5", "h6",
+			"[role='heading'][aria-level='1']", "[role='heading'][aria-level='2']",
+			"[role='heading'][aria-level='3']", "[role='heading'][aria-level='4]'",
+			"[role='heading'][aria-level='5']", "[role='heading'][aria-level='6']"];
+		
+		for(let selector of selectors) {
+			for(let foundElem of findElements(selector, rootsForQuerySelector)) {
+				const htmlPreamble = `<strong class="${cssClassNameFOrTheElementsAddedByThisBookmarklet}" style="color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;">&lt;`;
+				const htmlPostamble = "&gt;</strong>";
+				let htmlForFirstChild = `${htmlPreamble}${selector}${htmlPostamble}`;
+				let htmlForLastChild = `${htmlPreamble}/${selector}${htmlPostamble}`;
+				insertAsFirstChild(foundElem, htmlForFirstChild);
+				insertAsLastChild(foundElem, htmlForLastChild);
 			}
-
-			for(let foundElem of findElements('h2')) {
-				insertAsFirstChild(foundElem, "<strong class=\"openSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;h2&gt;</strong>");
-				insertAsLastChild(foundElem, "<strong class=\"closeSpan\" style=\"color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;\">&lt;/h2&gt;</strong>");
-			}
-		 
-			$("script[src$='headings.js']").remove();
-			s.remove();
-        }
-        l()
+		}
+		
     }
-    var s = document.createElement("script");
-    s.addEventListener 
-			? s.addEventListener("load", callback, !1) 
-			: s.readyState && (s.onreadystatechange = callback), 
-				s.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js", 
-				document.body.appendChild(s);
+
+	run();
+    
 })(bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f || (bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f = {}));
