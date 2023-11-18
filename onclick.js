@@ -7,8 +7,8 @@ javascript: (function() {
 				$(this).attr('style','outline:red 1px solid;padding:2px;');
    			 	$(this).after("<span role=\"region\" aria-label=\"Onclick\" class=\"axSpan\" style=\"outline:red 1px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">onclick=\""+$(this).attr('onclick')+"\"</span>");
 				}
-			//console.log('Event handlers :', $._data(this, "events"));
-			//console.log('this is :', this);
+			/* console.log('Event handlers :', $._data(this, "events")); */
+			/* console.log('this is :', this); */
 			
 				function output(){ 
 					var e = $._data(this).events,
