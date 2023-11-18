@@ -7,6 +7,7 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 	
 	function getRootsForQuerySelector() {
 		let r = [document.body];
+
 		function findShadowRoots(node__) {
 			if (node__.shadowRoot) {
 				r.push(node__.shadowRoot);
@@ -18,6 +19,11 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 			}
 		}
 		findShadowRoots(document.body);
+		
+		for(let iframe of document.body.querySelectorAll('iframe')) {
+			if(!iframe.contentDocument) continue; /* cross-origin iframe.  nothing we can do. */
+			r.push(iframe.contentDocument);
+		}
 		return r;
 	}
 
