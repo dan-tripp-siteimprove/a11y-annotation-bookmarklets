@@ -42,13 +42,13 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 		return r;
 	}
 
-	function insertAsFirstChild(targetElem_, htmlStrToPrepend_)  {
-		const newElem = parseHtmlElementStr(htmlStrToPrepend_);
+	function insertAsFirstChild(targetElem_, htmlStrToInsert_)  {
+		const newElem = parseHtmlElementStr(htmlStrToInsert_);
 		targetElem_.insertBefore(newElem, targetElem_.firstChild);
 	}
 
-	function insertAsLastChild(targetElem_, htmlStrToPrepend_)  {
-		const newElem = parseHtmlElementStr(htmlStrToPrepend_);
+	function insertAsLastChild(targetElem_, htmlStrToInsert_)  {
+		const newElem = parseHtmlElementStr(htmlStrToInsert_);
 		targetElem_.appendChild(newElem);
 	}
 
@@ -65,8 +65,10 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 			"[role='heading'][aria-level='3']", "[role='heading'][aria-level='4]'",
 			"[role='heading'][aria-level='5']", "[role='heading'][aria-level='6']"];
 		
+		let foundAnyElems = false;
 		for(let selector of selectors) {
 			for(let foundElem of findElements(selector, rootsForQuerySelector)) {
+				foundAnyElems = true;
 				const htmlPreamble = `<strong class="${cssClassNameFOrTheElementsAddedByThisBookmarklet}" style="color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;">&lt;`;
 				const htmlPostamble = "&gt;</strong>";
 				let htmlForFirstChild = `${htmlPreamble}${selector}${htmlPostamble}`;
@@ -75,8 +77,20 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 				insertAsLastChild(foundElem, htmlForLastChild);
 			}
 		}
-		
+		showMsg(foundAnyElems);
     }
+
+	function showMsg(foundAnyElems_) {
+		let idForMsgElem = `msg_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
+		let msg = foundAnyElems_ 
+			? 'Success: some headings were found on the page' 
+			: 'No headings were found on page';
+		insertAsFirstChild(document.body, 
+			`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;" id="${idForMsgElem}" role="status">${msg}</strong>`);
+		setTimeout(() => {
+				document.getElementById(idForMsgElem).remove();
+			}, 6000);
+	}
 
 	run();
     
