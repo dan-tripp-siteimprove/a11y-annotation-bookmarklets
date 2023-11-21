@@ -52,6 +52,16 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 		targetElem_.appendChild(newElem);
 	}
 
+	function insertBefore(targetElem_, htmlStrToInsert_)  {
+		const newElem = parseHtmlElementStr(htmlStrToInsert_);
+		targetElem_.parentElement.insertBefore(newElem, targetElem_);
+	}
+
+	function insertAfter(targetElem_, htmlStrToInsert_)  {
+		const newElem = parseHtmlElementStr(htmlStrToInsert_);
+		targetElem_.parentElement.insertBefore(newElem, targetElem_.nextSibling);
+	}
+
     function run() {
 		let rootsForQuerySelector = getRootsForQuerySelector();
 
