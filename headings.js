@@ -3,7 +3,7 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 (async function (bookmarkletVars) {
 
 	const UNIQUE_ID_FOR_THIS_BOOKMARKLET = '3394c278_f9fa_4a37_837f_c3e1b16a2c1f';
-	const cssClassNameFOrTheElementsAddedByThisBookmarklet = `class_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
+	const cssClassNameForElementsAddedByThisBookmarklet = `class_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
 	
 	function getRootsForQuerySelector() {
 		let r = [document.body];
@@ -55,7 +55,7 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
     function run() {
 		let rootsForQuerySelector = getRootsForQuerySelector();
 
-		for(let foundElem of findElements(`.${cssClassNameFOrTheElementsAddedByThisBookmarklet}`, 
+		for(let foundElem of findElements(`.${cssClassNameForElementsAddedByThisBookmarklet}`, 
 				rootsForQuerySelector)) {
 			foundElem.remove();
 		}
@@ -69,7 +69,7 @@ var bookmarkletVars_3394c278_f9fa_4a37_837f_c3e1b16a2c1f;
 		for(let selector of selectors) {
 			for(let foundElem of findElements(selector, rootsForQuerySelector)) {
 				foundAnyElems = true;
-				const htmlPreamble = `<strong class="${cssClassNameFOrTheElementsAddedByThisBookmarklet}" style="color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;">&lt;`;
+				const htmlPreamble = `<strong class="${cssClassNameForElementsAddedByThisBookmarklet}" style="color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;speak:literal-punctuation;">&lt;`;
 				const htmlPostamble = "&gt;</strong>";
 				let htmlForFirstChild = `${htmlPreamble}${selector}${htmlPostamble}`;
 				let htmlForLastChild = `${htmlPreamble}/${selector}${htmlPostamble}`;
