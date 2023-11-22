@@ -15,6 +15,10 @@ function ensureDirectoryExistence(dirPath) {
 function minifyAndEncode(filePath) {
 	let code = fs.readFileSync(filePath, 'utf8');
 
+	let javascriptPrefix = 'javascript:';
+	if(!code.startsWith(javascriptPrefix)) throw new Error();
+	code = code.substring(javascriptPrefix.length);
+
 	/* we want these options for many reasons.  
 	- I don't want to make debugging the bookmarklet in the browser too difficult.  
 	- I don't want the resulting file to be too full of urlencoded space characters.  
