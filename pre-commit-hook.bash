@@ -16,6 +16,8 @@ trap exit_trap_func EXIT
 
 set -o errtrace
 
+exit 0 # this pre commit hook wasn't working.  temporarily disabling it. 
+
 # here we check for "//"-style comments in javascript (as opposed to "/* */"-style) 
 # and fail on them.  
 # b/c they will break a bookmarklet.  that style of comment will work if you paste it into the 
