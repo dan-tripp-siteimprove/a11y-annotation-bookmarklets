@@ -1,5 +1,8 @@
 javascript: (function() {
 
+	const UNIQUE_ID_FOR_THIS_BOOKMARKLET = '1068bf83_143e_4d0e_957f_170c2cda772e';
+	const cssClassNameForElementsAddedByThisBookmarklet = `class_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
+	
 	function areWeInAnIframeChild() {
 		return window.self !== window.top;
 	}
@@ -52,12 +55,14 @@ javascript: (function() {
             return r;
         }
 
+        let foundAnyElems = false;
         for(let root of getRootsForQuerySelector()) {
             $(".altSpan, .axSpan, .closeSpan", root).remove();
             $("a[alt], button[alt], label[alt]", root).each(function() {
                 $(this).before("<span class=\"altSpan\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation;\"> INVALID❌alt=\"" + $(this).attr('alt') + "\" on " + $(this).prop("tagName") + "</span>");
             });
             $("img, [role=img]", root).each(function() {
+                foundAnyElems = true;
                 if ($(this).attr('role')) {
                     $(this).after("<span class=\"closeSpan\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;outline:orange 2px dashed;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓role=\"" + $(this).attr('role') + "\"</span>");
                 }
@@ -125,34 +130,39 @@ javascript: (function() {
                 }
 
             });
-
-            if (!$('img, [role=img]').length) {
-                $('body').prepend('<strong style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;" id="failure" role="status"></strong>');
-                $('#failure').html('No Images Found on Page: ' + document.title);
-                setTimeout(function() {
-                    $('#failure').remove();
-                }, 6000);
-            } else {
-                $('body').append('<div id="success" role="alert" style="position:absolute; width:0; height:0; clip: rect(0,0,0,0);"></div>');
-                $('#success').html('Success! Images Found on Page: ' + document.title);
-                setTimeout(function() {
-                    $('#success').remove();
-                }, 3000);
-            }
         }
+
+        showMsg(foundAnyElems, "images");
     }
+
+	function showMsg(foundAnyElems_, nouns_) {
+		let idForMsgElem = `msg_${UNIQUE_ID_FOR_THIS_BOOKMARKLET}`;
+		let msg = foundAnyElems_ 
+			? `Success: one or more ${nouns_} were found on the page` 
+			: `No ${nouns_} were found on page`;
+		$('body').prepend(
+			`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; " 
+            id="${idForMsgElem}" role="status">${msg}</strong>`);
+		setTimeout(() => { $(`#${idForMsgElem}`).remove(); }, 6000);
+	}
  
-    /* Doing it this way makes it so that this code can run either:
-    - as a bookmarklet (in which case this code will probably be run after page load is finished)
+    /* Doing it this way makes it so that 
     or:
-    - as a tampermonkey script via "@require" (in which case this code will definitely be run well 
-    before page load is finished.) */
+    -  */
     if(document.readyState === "complete") {
+        /* This will happen, probably, if this code is running as a bookmarklet. */
         run();
     } else {
+        /* This will happen (definitely, I think) if this code is running as a 
+        tampermonkey script via "@require". */ 
         document.addEventListener("readystatechange", (event__) => {
             if(document.readyState === "complete") {
-                run();
+                /* We could call run() right now, and that would work most of the time.
+                But at least one of my test pages builds some shadow DOM with JS in a 
+                window.addEventListener("load", ...) listener.  So that shadow DOM doesn't 
+                exist yet, I think.  So this setTimeout() is a hack so that run() call will 
+                probably be calle after that "load" listener. */
+                setTimeout(run, 1000);
             }
         });
     }
