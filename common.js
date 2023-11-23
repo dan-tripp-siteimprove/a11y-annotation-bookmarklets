@@ -6,14 +6,15 @@ function areWeInAnIframe() {
 }
 
 function showMsg(foundAnyElems_, nouns_) {
-	let idForMsgElem = `msg_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}`;
 	let msg = foundAnyElems_ 
 		? `Success: one or more ${nouns_} were found on the page` 
 		: `No ${nouns_} were found on page`;
-	$('body').prepend(
-		`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; z-index: 9999999" 
-		id="${idForMsgElem}" role="status">${msg}</strong>`);
-	setTimeout(() => { $(`#${idForMsgElem}`).remove(); }, 6000);
+	let newMsgElem = $(`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;
+		font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; 
+		z-index: 9999999" role="status">${msg}</strong>`);
+	$('body').prepend(newMsgElem);
+	let delayInMilliseconds = 6000; 
+	setTimeout(() => { newMsgElem.remove(); }, delayInMilliseconds);
 }
 
 function getRootsForQuerySelector() {
