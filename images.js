@@ -53,7 +53,7 @@ javascript: (function() {
         }
 
         for(let root of getRootsForQuerySelector()) {
-            $("span", root).remove(".altSpan, .axSpan, .closeSpan");
+            $(".altSpan, .axSpan, .closeSpan", root).remove();
             $("a[alt], button[alt], label[alt]", root).each(function() {
                 $(this).before("<span class=\"altSpan\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation;\"> INVALID❌alt=\"" + $(this).attr('alt') + "\" on " + $(this).prop("tagName") + "</span>");
             });
