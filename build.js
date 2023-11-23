@@ -2,24 +2,28 @@ const fs = require('fs');
 const path = require('path');
 const UglifyJS = require('uglify-js');
 
-const inputFileName = 'images.js';
+const bookmarkletNames = ['images'];
 const outputDir = 'build-output';
-const outputFilePath = path.join(outputDir, inputFileName);
 
-function ensureDirectoryExistence(dirPath) {
-	if (!fs.existsSync(dirPath)) {
-		fs.mkdirSync(dirPath);
+function ensureDirectoryExistence(dirPath_) {
+	if (!fs.existsSync(dirPath_)) {
+		fs.mkdirSync(dirPath_);
 	}
 }
 
-function minifyAndEncode(filePath) {
-	let code = fs.readFileSync(filePath, 'utf8');
+function getFileContents(filePath_) {
+	return fs.readFileSync(filePath_, 'utf8');
+}
+
+function minifyAndUriEncode(code_) {
+
+	let r = code_;
 
 	let javascriptPrefix = 'javascript:';
-	if(!code.startsWith(javascriptPrefix)) throw new Error();
-	code = code.substring(javascriptPrefix.length);
+	if(!r.startsWith(javascriptPrefix)) throw new Error();
+	r = r.substring(javascriptPrefix.length);
 
-	/* we want these options for many reasons.  
+	/* we want these options for these reasons: 
 	- I don't want to make debugging the bookmarklet in the browser too difficult.  
 	- I don't want the resulting file to be too full of urlencoded space characters.  
 	- one of these options seems to prevent an error in firefox which I don't understand, 
@@ -27,22 +31,30 @@ function minifyAndEncode(filePath) {
 	*/
 	let minifyOptions = { compress: false, mangle: false, output: { beautify: false, comments: false } };
 
-	let minifyResult = UglifyJS.minify(code, minifyOptions);
+	let minifyResult = UglifyJS.minify(r, minifyOptions);
 	if(minifyResult.error) {
 		throw new Error(`Error during minification: ${minifyResult.error}`);
 	}
-	code = minifyResult.code;
+	r = minifyResult.code;
 
-	code = 'javascript:' + encodeURIComponent(code);
+	r = 'javascript:' + encodeURIComponent(r);
 
-	return code;
+	return r;
 }
 
 function main() {
 	ensureDirectoryExistence(outputDir);
-	const encodedContent = minifyAndEncode(inputFileName);
-	fs.writeFileSync(outputFilePath, encodedContent, 'utf8');
-	console.log('Success.  Bookmarklet written to:', outputFilePath);
+	let commonCode = getFileContents('common.js');
+	for(let bookmarkletName of bookmarkletNames) {
+		let notCommonFileName = `${bookmarkletName}-not-common.js`;
+		let notCommonCode = getFileContents(notCommonFileName);
+		let combinedCode = `javascript:(function() {\n${commonCode}\n${notCommonCode}\n})();\n`;
+		let combinedCodeMinifiedAndUriEncoded = minifyAndUriEncode(combinedCode);
+		let combinedOutputFileName = `${bookmarkletName}-bookmarklet.js`;
+		let combinedOutputFilePath = path.join(outputDir, combinedOutputFileName);
+		fs.writeFileSync(combinedOutputFilePath, combinedCodeMinifiedAndUriEncoded, 'utf8');
+		console.log(`Created ${combinedOutputFilePath}`);
+	}
 }
 
 main();
