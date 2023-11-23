@@ -142,14 +142,11 @@ javascript: (function() {
 			? `Success: one or more ${nouns_} were found on the page` 
 			: `No ${nouns_} were found on page`;
 		$('body').prepend(
-			`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; " 
+			`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; z-index: 9999999" 
             id="${idForMsgElem}" role="status">${msg}</strong>`);
 		setTimeout(() => { $(`#${idForMsgElem}`).remove(); }, 6000);
 	}
  
-    /* Doing it this way makes it so that 
-    or:
-    -  */
     if(document.readyState === "complete") {
         /* This will happen, probably, if this code is running as a bookmarklet. */
         run();
@@ -159,10 +156,10 @@ javascript: (function() {
         document.addEventListener("readystatechange", (event__) => {
             if(document.readyState === "complete") {
                 /* We could call run() right now, and that would work most of the time.
-                But at least one of my test pages builds some shadow DOM with JS in a 
-                window.addEventListener("load", ...) listener.  So that shadow DOM doesn't 
-                exist yet, I think.  So this setTimeout() is a hack so that run() call will 
-                probably be calle after that "load" listener. */
+                But not in this case: at least one of my test pages builds some shadow DOM with JS 
+                in a window.addEventListener("load", ...) listener.  So that shadow DOM doesn't 
+                exist yet, I think.  So this setTimeout() is a hack so that run() will 
+                probably be called after that "load" listener which builds the shadow DOM. */
                 setTimeout(run, 1000);
             }
         });
