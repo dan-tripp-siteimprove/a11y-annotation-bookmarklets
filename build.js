@@ -12,7 +12,9 @@ function ensureDirectoryExistence(dirPath_) {
 }
 
 function getFileContents(filePath_) {
-	return fs.readFileSync(filePath_, 'utf8');
+	let r = fs.readFileSync(filePath_, 'utf8');
+	r = r.replace(/\r\n/g, '\n'); // normalize EOLs to unix 
+	return r;
 }
 
 function minifyAndUriEncode(code_) {
@@ -51,7 +53,13 @@ function writeCombinedCodeToBookmarkletOutputFile(combinedCode_, bookmarkletName
 	let combinedCodeMinifiedAndUriEncoded = minifyAndUriEncode(combinedCode_);
 	let combinedOutputFileName = `${bookmarkletName_}-bookmarklet.js`;
 	let combinedOutputFilePath = path.join(OUTPUT_DIR, combinedOutputFileName);
-	writeStrToFile(combinedCodeMinifiedAndUriEncoded,combinedOutputFilePath);
+	writeStrToFile(combinedCodeMinifiedAndUriEncoded, combinedOutputFilePath);
+}
+
+function writeCombinedCodeToTampermonkeyRequireDirectiveSourceFile(combinedCode_, bookmarkletName_) {
+	let combinedOutputFileName = `${bookmarkletName_}-tampermonkey-require-directive-source-file.js`;
+	let combinedOutputFilePath = path.join(OUTPUT_DIR, combinedOutputFileName);
+	writeStrToFile(combinedCode_, combinedOutputFilePath);
 }
 
 function main() {
@@ -70,6 +78,7 @@ function main() {
 			`javascript:(function() {\n${commonCode}\n${notCommonCode}\n})()${importantSemicolon}\n`;
 
 		writeCombinedCodeToBookmarkletOutputFile(combinedCode, bookmarkletName);
+		writeCombinedCodeToTampermonkeyRequireDirectiveSourceFile(combinedCode, bookmarkletName);
 
 	}
 }
