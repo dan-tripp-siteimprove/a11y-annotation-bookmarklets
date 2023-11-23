@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const UglifyJS = require('uglify-js');
 
-const bookmarkletNames = ['images'];
-const outputDir = 'build-output';
+const BOOKMARKLET_NAMES = ['images'];
+const OUTPUT_DIR = 'build-output';
 
 function ensureDirectoryExistence(dirPath_) {
 	if (!fs.existsSync(dirPath_)) {
@@ -42,18 +42,35 @@ function minifyAndUriEncode(code_) {
 	return r;
 }
 
+function writeStrToFile(str_, filePath_) {
+	fs.writeFileSync(filePath_, str_, 'utf8');
+	console.log(`Wrote ${filePath_}`);
+}
+
+function writeCombinedCodeToBookmarkletOutputFile(combinedCode_, bookmarkletName_) {
+	let combinedCodeMinifiedAndUriEncoded = minifyAndUriEncode(combinedCode_);
+	let combinedOutputFileName = `${bookmarkletName_}-bookmarklet.js`;
+	let combinedOutputFilePath = path.join(OUTPUT_DIR, combinedOutputFileName);
+	writeStrToFile(combinedCodeMinifiedAndUriEncoded,combinedOutputFilePath);
+}
+
 function main() {
-	ensureDirectoryExistence(outputDir);
+	ensureDirectoryExistence(OUTPUT_DIR);
 	let commonCode = getFileContents('common.js');
-	for(let bookmarkletName of bookmarkletNames) {
+	for(let bookmarkletName of BOOKMARKLET_NAMES) {
 		let notCommonFileName = `${bookmarkletName}-not-common.js`;
 		let notCommonCode = getFileContents(notCommonFileName);
-		let combinedCode = `javascript:(function() {\n${commonCode}\n${notCommonCode}\n})();\n`;
-		let combinedCodeMinifiedAndUriEncoded = minifyAndUriEncode(combinedCode);
-		let combinedOutputFileName = `${bookmarkletName}-bookmarklet.js`;
-		let combinedOutputFilePath = path.join(outputDir, combinedOutputFileName);
-		fs.writeFileSync(combinedOutputFilePath, combinedCodeMinifiedAndUriEncoded, 'utf8');
-		console.log(`Created ${combinedOutputFilePath}`);
+
+		/* without this semicolon, this script will break when run in tampermonkey via 
+		@require. the error message (in devtools console) was: 
+		userscript.html?name=bookmarklet-dev%252C-auto-load-scratch-local-file.user.js&id=a3c6bae5-a4c1-4509-8da9-dffb94adfa98:176 Uncaught (in promise) TypeError: (intermediate value)(...) is not a function */
+		let importantSemicolon = ';';
+
+		let combinedCode = 
+			`javascript:(function() {\n${commonCode}\n${notCommonCode}\n})()${importantSemicolon}\n`;
+
+		writeCombinedCodeToBookmarkletOutputFile(combinedCode, bookmarkletName);
+
 	}
 }
 
