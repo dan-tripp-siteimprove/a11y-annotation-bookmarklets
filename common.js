@@ -65,7 +65,7 @@ function showMsg(foundAnyElems_, nouns_) {
 	setTimeout(() => { newMsgElem.remove(); }, delayInMilliseconds);
 }
 
-function getRootsForQuerySelector() {
+function getRootNodesForQuerySelector() {
 	let r = [document.body];
 
 	function findShadowRoots(node__) {

@@ -2,7 +2,7 @@
 function main() {
 
     let foundAnyElems = false;
-    for(let root of getRootsForQuerySelector()) {
+    for(let root of getRootNodesForQuerySelector()) {
         let altSpan = CSS_CLASS_ALTSPAN, axSpan = CSS_CLASS_AXSPAN, closeSpan = CSS_CLASS_CLOSESPAN, 
             inputSpan = CSS_CLASS_INPUTSPAN;
         $(`.${altSpan}, .${axSpan}, .${closeSpan}`, root).remove();
