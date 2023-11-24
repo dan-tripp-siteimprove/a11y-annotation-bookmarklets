@@ -67,7 +67,7 @@ function main() {
 	let commonCode = getFileContents('common.js');
 	commonCode = commonCode.replace(/__BUILD_TIMESTAMP_IN_EPOCH_MILLIS__/, Date.now().toString());
 	for(let bookmarkletName of BOOKMARKLET_NAMES) {
-		let notCommonFileName = `${bookmarkletName}-not-common.js`;
+		let notCommonFileName = `${bookmarkletName}.js`;
 		let notCommonCode = getFileContents(notCommonFileName);
 
 		/* without this semicolon, this script will break when run in tampermonkey via 
