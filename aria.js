@@ -17,90 +17,21 @@ function main() {
 			if ($(this).attr('aria-label')) {
 				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-label=\"" + $(this).attr('aria-label') + "\"</span>");
 			}
-			if ($(this).attr('role')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">role=\"" + $(this).attr('role') + "\"</span>");
+
+			const attrNamesToGiveAStandardAnnotationTo = ['role', 'aria-live', 
+				'aria-atomic', 'aria-modal', 'aria-disabled', 'aria-errormessage', 
+				'aria-flowto', 'aria-owns', 'aria-roledescription', 'aria-sort', 
+				'aria-keyshortcuts', 'aria-activedescendant', 'aria-placeholder', 
+				'aria-busy', 'aria-autocomplete', 'aria-colcount', 'aria-colindex', 
+				'aria-colspan', 'aria-rowcount', 'aria-rowindex', 'aria-rowspan', 
+				'aria-details', 'aria-current', 'aria-orientation', 'aria-valuemax', 
+				'aria-valuemin', 'aria-valuenow', 'aria-valuetext'];
+			for(let attrName of attrNamesToGiveAStandardAnnotationTo) {
+				if ($(this).attr(attrName)) {
+					$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">"+attrName+"=\"" + $(this).attr(attrName) + "\"</span>");
+				}
 			}
-			if ($(this).attr('aria-live')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-live=\"" + $(this).attr('aria-live') + "\"</span>");
-			}
-			if ($(this).attr('aria-atomic')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-atomic=\"" + $(this).attr('aria-atomic') + "\"</span>");
-			}
-			if ($(this).attr('aria-modal')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-modal=\"" + $(this).attr('aria-modal') + "\"</span>");
-			}
-			if ($(this).attr('aria-disabled')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-disabled=\"" + $(this).attr('aria-disabled') + "\"</span>");
-			}
-			if ($(this).attr('aria-errormessage')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-errormessage=\"" + $(this).attr('aria-errormessage') + "\"</span>");
-			}
-			if ($(this).attr('aria-flowto')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-flowto=\"" + $(this).attr('aria-flowto') + "\"</span>");
-			}
-			if ($(this).attr('aria-owns')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-owns=\"" + $(this).attr('aria-owns') + "\"</span>");
-			}
-			if ($(this).attr('aria-roledescription')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-roledescription=\"" + $(this).attr('aria-roledescription') + "\"</span>");
-			}
-			if ($(this).attr('aria-sort')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-sort=\"" + $(this).attr('aria-sort') + "\"</span>");
-			}
-			if ($(this).attr('aria-keyshortcuts')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-keyshortcuts=\"" + $(this).attr('aria-keyshortcuts') + "\"</span>");
-			}
-			if ($(this).attr('aria-activedescendant')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-activedescendant=\"" + $(this).attr('aria-activedescendant') + "\"</span>");
-			}
-			if ($(this).attr('aria-placeholder')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-placeholder=\"" + $(this).attr('aria-placeholder') + "\"</span>");
-			}
-			if ($(this).attr('aria-busy')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-busy=\"" + $(this).attr('aria-busy') + "\"</span>");
-			}
-			if ($(this).attr('aria-autocomplete')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-autocomplete=\"" + $(this).attr('aria-autocomplete') + "\"</span>");
-			}
-			if ($(this).attr('aria-colcount')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-colcount=\"" + $(this).attr('aria-colcount') + "\"</span>");
-			}
-			if ($(this).attr('aria-colindex')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-colindex=\"" + $(this).attr('aria-colindex') + "\"</span>");
-			}
-			if ($(this).attr('aria-colspan')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-colspan=\"" + $(this).attr('aria-colspan') + "\"</span>");
-			}
-			if ($(this).attr('aria-rowcount')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-rowcount=\"" + $(this).attr('aria-rowcount') + "\"</span>");
-			}
-			if ($(this).attr('aria-rowindex')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-rowindex=\"" + $(this).attr('aria-rowindex') + "\"</span>");
-			}
-			if ($(this).attr('aria-rowspan')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-rowspan=\"" + $(this).attr('aria-rowspan') + "\"</span>");
-			}
-			if ($(this).attr('aria-details')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-details=\"" + $(this).attr('aria-details') + "\"</span>");
-			}
-			if ($(this).attr('aria-current')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-current=\"" + $(this).attr('aria-current') + "\"</span>");
-			}
-			if ($(this).attr('aria-orientation')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-orientation=\"" + $(this).attr('aria-orientation') + "\"</span>");
-			}
-			if ($(this).attr('aria-valuemax')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-valuemax=\"" + $(this).attr('aria-valuemax') + "\"</span>");
-			}
-			if ($(this).attr('aria-valuemin')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-valuemin=\"" + $(this).attr('aria-valuemin') + "\"</span>");
-			}
-			if ($(this).attr('aria-valuenow')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-valuenow=\"" + $(this).attr('aria-valuenow') + "\"</span>");
-			}
-			if ($(this).attr('aria-valuetext')) {
-				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-valuetext=\"" + $(this).attr('aria-valuetext') + "\"</span>");
-			}
+
 			if ($(this).attr('aria-expanded')) {
 				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-expanded=\"" + $(this).attr('aria-expanded') + "\"</span>");
 			}
