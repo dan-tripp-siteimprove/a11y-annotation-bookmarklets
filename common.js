@@ -1,6 +1,54 @@
 
 const UNIQUE_ID_FOR_OUR_BOOKMARKLETS = 'd68c02e08c00';
 
+/* These CSS class names exist to handle these situations: 
+1) when bookmarklet X is run two or more times.
+2) when bookmarklet X is run then a different bookmarklet Y is run. 
+
+These CSS classes are not used for styling and they never exist.  We are using 
+the "class=" attribute here as a kind of "group ID", to keep track of which 
+elements our bookmarklets have added to the DOM, so that we can remove them 
+later.  
+
+Situation #2 is harder than situation #1.  In general, the bookmarklets add to 
+each other, so you'll see eg. all the images annotations and also all of the 
+ARIA annotations.  But then some of the bookmarklets have overlapping 
+functionality eg. "images" and "ARIA" both add an annotation for 
+"aria-labelledby".  eg. if we run 1) X, then 2) run X again, then 3) run Y: 
+the second run of X will first remove all* of the annotations that the first run of X 
+added, then re-add it's annotations specific to X.  then the run of Y will 
+first remove some of the annotations that X added, then add its own 
+annotations specific to Y.
+
+[* not all.  almost all.  see below.]
+
+This is complicated further by these facts:
+- sometimes the second run of X doesn't remove everything that it added.  
+eg. in "images" (at the time of writing) it adds some "inputSpan" annotations 
+and doesn't remove them.  so on second and subsequent runs, it will keep re-adding 
+duplicates of these annotations indefinitely.  
+- the annotations that they have in common might be almost 
+identical, but not quite.  eg. for "images" and "ARIA", their "aria-labelledby" 
+annotations use different colors). 
+- sometimes Y will remove what X added, and not add any equivalent back.  
+eg. "ARIA" removes "images"' "NO ID MATCH" annotation.
+
+At the time of writing I don't know how much of this behaviour was intentional 
+by the original author(s), or is desirable now.  And I'm not trying to know.  
+Instead, my goals are:
+- preserve the original behaviour amidst our new build process - whether that 
+behaviour is (as in the example above) "ARIA" removing the annotations that 
+were added by "images", or mangling them, or adding useless duplicates for 
+them. 
+- make these CSS class names unique so that we'll never collide with names that 
+are used by the target web page.  
+*/
+
+const CSS_CLASS_ALTSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_altSpan`;
+const CSS_CLASS_AXSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_axSpan`;
+const CSS_CLASS_CLOSESPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_closeSpan`;
+const CSS_CLASS_INPUTSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_inputSpan`;
+
 function areWeInAnIframe() {
 	return window.self !== window.top;
 }
