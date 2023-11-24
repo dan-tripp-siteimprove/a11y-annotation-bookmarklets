@@ -31,8 +31,10 @@ EOF
 	exit 1
 fi
 
+./build.bash || true
 while true; do 
 	inotifywait.exe --includei '.*\.js' ..
-	./build.bash
+	date
+	./build.bash || true
 done
 

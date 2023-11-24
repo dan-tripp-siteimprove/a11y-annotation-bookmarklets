@@ -12,8 +12,6 @@ function main() {
         $("img, [role=img]", root).each(function() {
             foundAnyElems = true;
             if ($(this).attr('role')) {
-                                        throw new Error(); // tdr 
-
                 $(this).after(`<span class=\"${closeSpan}\"`+" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;outline:orange 2px dashed;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓role=\"" + $(this).attr('role') + "\"</span>");
             }
             if ($(this).attr('aria-label')) {
@@ -65,7 +63,7 @@ function main() {
                 $(this).attr('style', 'outline:green 2px solid;padding:2px;');
                 if ($(this).parent('a').length) {
                     if ($(this).attr('alt') == "") {
-                        $(this).before(`<span class=\"${altSpan}\"`+" style=\"outline:orange 2px dashed;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:absolute;line-height:100%;z-index:2147483647;speak:literal-punctuation;border-bottom:2px solid blue;\">LINK IMG❓alt=\"" + $(this).attr('alt') + "\"</span>");
+                        $(this).before(`<span class\"${altSpan}\"`+" style=\"outline:orange 2px dashed;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:absolute;line-height:100%;z-index:2147483647;speak:literal-punctuation;border-bottom:2px solid blue;\">LINK IMG❓alt=\"" + $(this).attr('alt') + "\"</span>");
                     } else {
                         $(this).before(`<span class=\"${altSpan}\"`+" style=\"outline:orange 2px dashed;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:absolute;line-height:100%;z-index:2147483647;speak:literal-punctuation;border-bottom:2px solid blue;\">LINK IMG👍alt=\"" + $(this).attr('alt') + "\"❓</span>");
                     }

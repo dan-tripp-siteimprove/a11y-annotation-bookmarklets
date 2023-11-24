@@ -102,6 +102,8 @@ function runBookmarkletMainFunctionWhenAppropriate(mainFunc_) {
 		return;
 	}
 
+	logBuildTimestamp();
+
 	if(document.readyState === "complete") {
 		/* This will happen, probably, if this code is running as a bookmarklet. */
 		mainFunc_();
@@ -122,12 +124,17 @@ function runBookmarkletMainFunctionWhenAppropriate(mainFunc_) {
 
 }
 
+function logBuildTimestamp() {
+	let buildTimestamp = "__BUILD_TIMESTAMP_IN_EPOCH_MILLIS__";
+	buildTimestamp = parseInt(buildTimestamp, 10);
+	let buildTimeAgoInMillis = Date.now() - buildTimestamp;
+	let buildTimeAgoInSeconds = Math.round(buildTimeAgoInMillis/1000);
+	console.log(new Date(), `Built ${buildTimeAgoInSeconds} second(s) ago.`);
+}
 
 /* here we inline the 'zepto' library.  zepto is a small jquery replacement. 
 from https://zeptojs.com/zepto.min.js 
 downloaded ~ 2023-11-21.  v1.2.0 of zepto.  
-I url-encoded it (via python's urllib.parse.quote()) because before I did that, 
-there were strange problems. 
 I'm using zepto (~ 26K) instead of jquery (~ 89K) because when I inlined jquery like this 
 it seemed to cause a blocking problem:  my edits to the bookmarklet seemed to silently fail 
 in firefox. */

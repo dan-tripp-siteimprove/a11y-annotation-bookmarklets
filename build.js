@@ -65,6 +65,7 @@ function writeCombinedCodeToTampermonkeyRequireDirectiveSourceFile(combinedCode_
 function main() {
 	ensureDirectoryExistence(OUTPUT_DIR);
 	let commonCode = getFileContents('common.js');
+	commonCode = commonCode.replace(/__BUILD_TIMESTAMP_IN_EPOCH_MILLIS__/, Date.now().toString());
 	for(let bookmarkletName of BOOKMARKLET_NAMES) {
 		let notCommonFileName = `${bookmarkletName}-not-common.js`;
 		let notCommonCode = getFileContents(notCommonFileName);
