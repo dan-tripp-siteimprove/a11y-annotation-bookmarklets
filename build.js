@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const UglifyJS = require('uglify-js');
 
-const BOOKMARKLET_NAMES = ['images'];
+const BOOKMARKLET_NAMES = ['images', 'aria'];
 const OUTPUT_DIR = 'build-output';
 
 function ensureDirectoryExistence(dirPath_) {

@@ -6,7 +6,11 @@ function main() {
         let altSpan = CSS_CLASS_ALTSPAN, axSpan = CSS_CLASS_AXSPAN, closeSpan = CSS_CLASS_CLOSESPAN, 
             inputSpan = CSS_CLASS_INPUTSPAN, openSpan = CSS_CLASS_OPENSPAN;
 		$(`.${openSpan}, .${closeSpan}, .${inputSpan}, .${axSpan}`, root).remove();
-		var arias = $('[aria-details], [aria-disabled], [aria-errormessage], [aria-flowto], [aria-owns], [aria-roledescription], [aria-keyshortcuts], [aria-autocomplete], [aria-sort], [aria-placeholder], [aria-busy], [aria-modal], [aria-details], [aria-activedescendant], [aria-colcount], [aria-colindex], [aria-colspan], [aria-posinset], [aria-rowcount], [aria-rowindex], [aria-rowspan], [aria-setsize], [aria-modal], [aria-current], [aria-expanded], [aria-controls], [aria-selected], [aria-required], [aria-invalid], [aria-labelledby], [aria-describedby], [aria-label], [role], [aria-hidden], [aria-level], [aria-relevant], [aria-haspopup], [aria-valuetext], [aria-orientation], [aria-valuemin], [aria-valuemax], [aria-valuenow], [aria-pressed], [aria-checked], [aria-live], [aria-atomic]', root).not(':input[type=hidden], :input[type=button], :input[type=submit], :input[type=reset]');
+		var arias = $('[aria-details], [aria-disabled], [aria-errormessage], [aria-flowto], [aria-owns], [aria-roledescription], [aria-keyshortcuts], [aria-autocomplete], [aria-sort], [aria-placeholder], [aria-busy], [aria-modal], [aria-details], [aria-activedescendant], [aria-colcount], [aria-colindex], [aria-colspan], [aria-posinset], [aria-rowcount], [aria-rowindex], [aria-rowspan], [aria-setsize], [aria-modal], [aria-current], [aria-expanded], [aria-controls], [aria-selected], [aria-required], [aria-invalid], [aria-labelledby], [aria-describedby], [aria-label], [role], [aria-hidden], [aria-level], [aria-relevant], [aria-haspopup], [aria-valuetext], [aria-orientation], [aria-valuemin], [aria-valuemax], [aria-valuenow], [aria-pressed], [aria-checked], [aria-live], [aria-atomic]', root)
+			.not(`input[type=hidden], textarea[type=hidden], select[type=hidden], button[type=hidden], 
+			input[type=button], textarea[type=button], select[type=button], button[type=button], 
+			input[type=submit], textarea[type=submit], select[type=submit], button[type=submit], 
+			input[type=reset], textarea[type=reset], select[type=reset], button[type=reset]`);
 		$(arias).each(function() {
 			foundAnyElems = true;
 			$(this).attr('style', 'outline:green 2px solid;padding:2px;');
