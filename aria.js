@@ -14,10 +14,6 @@ function main() {
 		$(arias).each(function() {
 			foundAnyElems = true;
 			$(this).attr('style', 'outline:green 2px solid;padding:2px;');
-			if ($(this).attr('aria-label')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-label=\"" + $(this).attr('aria-label') + "\"</span>");
-			}
-
 			const attrNamesToGiveAStandardAnnotationTo = ['role', 'aria-live', 
 				'aria-atomic', 'aria-modal', 'aria-disabled', 'aria-errormessage', 
 				'aria-flowto', 'aria-owns', 'aria-roledescription', 'aria-sort', 
@@ -32,24 +28,15 @@ function main() {
 				}
 			}
 
-			if ($(this).attr('aria-expanded')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-expanded=\"" + $(this).attr('aria-expanded') + "\"</span>");
+			const attrNamesToGiveADifferentStandardAnnotationTo = ['aria-label', 
+				'aria-expanded', 'aria-selected', 'aria-haspopup', 'aria-pressed', 
+				'aria-checked', 'aria-level', 'aria-labelledby', 'aria-controls'];
+			for(let attrName of attrNamesToGiveADifferentStandardAnnotationTo) {
+				if ($(this).attr(attrName)) {
+					$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">"+attrName+"=\"" + $(this).attr(attrName) + "\"</span>");
+				}
 			}
-			if ($(this).attr('aria-selected')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-selected=\"" + $(this).attr('aria-selected') + "\"</span>");
-			}
-			if ($(this).attr('aria-haspopup')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-haspopup=\"" + $(this).attr('aria-haspopup') + "\"</span>");
-			}
-			if ($(this).attr('aria-pressed')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-pressed=\"" + $(this).attr('aria-pressed') + "\"</span>");
-			}
-			if ($(this).attr('aria-checked')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-checked=\"" + $(this).attr('aria-checked') + "\"</span>");
-			}
-			if ($(this).attr('aria-level')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-level=\"" + $(this).attr('aria-level') + "\"</span>");
-			}
+
 			if ($(this).attr('aria-relevant')) {
 				$(this).before("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-relevant=\"" + $(this).attr('aria-relevant') + "\"</span>");
 			}
@@ -68,7 +55,6 @@ function main() {
 				}
 			}
 			if ($(this).attr('aria-labelledby')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-labelledby=\"" + $(this).attr('aria-labelledby') + "\"</span>");
 				var labelledbyValue = $(this).attr('aria-labelledby');
 				var labelledbyArray = labelledbyValue.split(' ');
 				for (i = 0; i < labelledbyArray.length; i++) {
@@ -77,7 +63,6 @@ function main() {
 				}
 			}
 			if ($(this).attr('aria-controls')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-controls=\"" + $(this).attr('aria-controls') + "\"</span>");
 				var controlsValue = $(this).attr('aria-controls');
 				var controlsArray = controlsValue.split(' ');
 				for (i = 0; i < controlsArray.length; i++) {
