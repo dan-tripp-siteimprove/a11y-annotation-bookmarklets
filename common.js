@@ -46,6 +46,7 @@ are used by the target web page.
 
 const CSS_CLASS_ALTSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_altSpan`;
 const CSS_CLASS_AXSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_axSpan`;
+const CSS_CLASS_OPENSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_openSpan`;
 const CSS_CLASS_CLOSESPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_closeSpan`;
 const CSS_CLASS_INPUTSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_inputSpan`;
 
@@ -55,8 +56,8 @@ function areWeInAnIframe() {
 
 function showMsg(foundAnyElems_, nouns_) {
 	let msg = foundAnyElems_ 
-		? `Success: one or more ${nouns_} were found on the page` 
-		: `No ${nouns_} were found on page`;
+		? `Success: one or more ${nouns_} were found on this page` 
+		: `No ${nouns_} were found on this page`;
 	let newMsgElem = $(`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;
 		font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; 
 		z-index: 9999999" role="status">${msg}</strong>`);
