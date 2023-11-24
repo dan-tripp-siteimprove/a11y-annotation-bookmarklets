@@ -2,14 +2,24 @@
 <head>
 <meta charset="UTF-8">
 <title>ARIA Bookmarklet for Accessibility Testing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+
+
+  <script>
+
+window.addEventListener("load", function(event) {
+
+	document.querySelector('#shadow-dom-open').attachShadow({ mode: 'open' }).innerHTML = 'This is some ARIA in an open shadow DOM: <button aria-haspopup="true">X</button>';
+	document.querySelector('#shadow-dom-closed').attachShadow({ mode: 'closed' }).innerHTML = 'This is some ARIA in a closed shadow DOM: <button aria-haspopup="true">X</button>';
+
+});
+
+  </script>
+
+
+
 </head>
 <body>
-<p><a href="index.html"><span aria-hidden="true">&lt;</span> Back to Bookmarklets for Accessibility Testing</a></p>
 <h1>ARIA Bookmarklet for Accessibility Testing</h1>
-<h2>Installation</h2>
-<p><a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://cdn.jsdelivr.net/gh/pauljadam/bookmarklets@master/aria.js';var iframes=document.getElementsByTagName('iframe');for(i=0;i<iframes.length;i++) {iframes[i].contentDocument.body.appendChild(document.createElement('script')).src='https://cdn.jsdelivr.net/gh/pauljadam/bookmarklets@master/aria.js';}})();">ARIA Bookmarklet</a> (drag link to bookmarks bar)</p>
 <h2>Test Content</h2>
 <button id="trigger-modal" aria-haspopup="true">Dynamic Help</button>
 <a href="http://google.com/" aria-haspopup="true">Google</a>
@@ -84,23 +94,74 @@
 </main>
 <div role="button">not button (nutton)</div>
 <div role="application">I have no idea how to ARIA</div>
-<h2>Bookmarklet Demo</h2>
-<script type="application/javascript">
-function loadJS(file) {
-    // DOM: Create the script element
-    var jsElm = document.createElement("script");
-    // set the type attribute
-    jsElm.type = "application/javascript";
-    // make the script element load file
-    jsElm.src = file;
-    // finally insert the element to the body element in order to load the script
-    document.body.appendChild(jsElm);
-}
-  </script>
-<button onclick="loadJS('aria.js');">Show ARIA Info</button>
-<h4><a href="iosinstall.html">Not so easy installation method</a></h4>
-<label for="jscode">Copy/Paste JavaScript Bookmarklet URL Code</label>
+<a href="#" aria-disabled="true">don't click</a><br>
+<input  type="email" aria-invalid="true"  aria-errormessage="err1" /><br>
+<div aria-flowto="flowtodiv2">
+	<p> flow from here </p>
+</div>
+<div aria-flowto="flowtodiv1">
+	<p> flow to here, and back, in a loop </p>
+</div>
+<ul>
+  <li aria-owns="childfruit">Fruit</li>
+  <li>Vegetables</li>
+</ul>
+
+<ul id="childfruit">
+  <li>Apples</li>
+  <li>Bananas</li>
+</ul>
+
 <br>
-<textarea id="jscode" rows="4" cols="40">javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://cdn.jsdelivr.net/gh/pauljadam/bookmarklets@master/aria.js';var iframes=document.getElementsByTagName('iframe');for(i=0;i<iframes.length;i++) {iframes[i].contentDocument.body.appendChild(document.createElement('script')).src='https://cdn.jsdelivr.net/gh/pauljadam/bookmarklets@master/aria.js';}})();</textarea>
+<br>
+<br>
+<br>
+<div role="img" aria-label="text aria label value">div role="img" with aria-label</div>
+<div role="img" aria-labelledby="fakeID">div role="img" with fake ID in aria-labelledby</div>
+<div role="img" aria-describedby="fakeID">div role="img" with fake ID in aria-describedby</div>
+<div role="img" aria-labelledby="realID">div role="img" with real ID in aria-labelledby</div>
+<div role="img" aria-describedby="realID">div role="img" with real ID in aria-describedby</div>
+<div role="img" aria-labelledby="fakeID1 fakeID2">div role="img" with two fake IDs in aria-labelledby</div>
+<div role="img" aria-describedby="fakeID1 fakeID2">div role="img" with two fake IDs in aria-describedby</div>
+<div role="img" aria-labelledby="duplicateID">div role="img" with a duplicate ID in aria-labelledby</div>
+<p><img src="./images_files/w3c_main.svg" aria-labelledby="part1 part2"></p>
+<p><img src="./images_files/w3c_main.svg" alt="" aria-describedby="part1 part2"></p>
+<br>
+<br>
+<div id="realID">referred to from elsewhere</div>
+<div id="part1">part 1</div>
+<div id="part2">part 2</div>
+<div id="duplicateID">duplicate</div>
+<div id="duplicateID">duplicate</div>
+
+
+
+<br>
+iframe, same origin:<br>
+(won't work when served via file://, only http.?://) <br>
+<iframe
+  title="Inline Frame Example"
+  width="300" height="100"
+  src="test-page-iframe-src.html"
+        style="border-left-width: 10px; border-top-width: 20px; " >
+</iframe>
+<br>
+iframe, different origin:<br>
+<iframe
+  title="Inline Frame Example"
+  width="300" height="100"
+        src="https://example.com"
+        style="border-width: 10px" >
+</iframe>
+<br><br><br><br>
+
+
+
+<br><br><br><br>
+shadow dom:<br>
+<p id="shadow-dom-open"/>
+<p id="shadow-dom-closed"/>
+
+
 </body>
 </html>
