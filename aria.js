@@ -186,8 +186,8 @@ function main() {
 			}
 		});
 
-		showMsg(foundAnyElems, "uses of ARIA");
 	}
+	showMsg(foundAnyElems, "uses of ARIA");
 }
 	  
 runBookmarkletMainFunctionWhenAppropriate(main);
