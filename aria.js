@@ -41,7 +41,7 @@ function main() {
 			if ($(this).attr('aria-owns')) {
 				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-owns=\"" + $(this).attr('aria-owns') + "\"</span>");
 			}
-			if ($(this).attr('aria-roledescription')) { throw new Error();
+			if ($(this).attr('aria-roledescription')) {
 				$(this).before("<span class=\""+axSpan+"\" style=\"outline:green 2px solid;padding:1px;color:black;font-family:sans-serif;font-weight:bold;font-size:small;background-color:yellow;position:relative;line-height:100%;z-index:2147483647;\">aria-roledescription=\"" + $(this).attr('aria-roledescription') + "\"</span>");
 			}
 			if ($(this).attr('aria-sort')) {
