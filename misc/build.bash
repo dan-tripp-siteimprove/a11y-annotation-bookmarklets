@@ -31,5 +31,6 @@ EOF
 	exit 1
 fi
 
+cd ..
 node build.js 
 

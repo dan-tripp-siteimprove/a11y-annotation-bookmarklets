@@ -12,9 +12,12 @@ function main() {
         $("img, [role=img]", root).each(function() {
             foundAnyElems = true;
             if ($(this).attr('role')) {
+                                        throw new Error(); // tdr 
+
                 $(this).after(`<span class=\"${closeSpan}\"`+" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;outline:orange 2px dashed;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓role=\"" + $(this).attr('role') + "\"</span>");
             }
             if ($(this).attr('aria-label')) {
+
                 $(this).after(`<span class=\"${closeSpan}\"`+" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;outline:orange 2px dashed;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓aria-label=\"" + $(this).attr('aria-label') + "\"</span>");
             }
             if ($(this).attr('aria-describedby')) {
