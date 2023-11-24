@@ -38,10 +38,6 @@ function main() {
 			if ($(this).attr('aria-selected')) {
 				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-selected=\"" + $(this).attr('aria-selected') + "\"</span>");
 			}
-			if ($(this).attr('aria-hidden')) {
-				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓aria-hidden=\"" + $(this).attr('aria-hidden') + "\"❓</span>");
-				$(this).attr('style', 'background-color:black;opacity:0.7;');
-			}
 			if ($(this).attr('aria-haspopup')) {
 				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-haspopup=\"" + $(this).attr('aria-haspopup') + "\"</span>");
 			}
@@ -56,6 +52,10 @@ function main() {
 			}
 			if ($(this).attr('aria-relevant')) {
 				$(this).before("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-relevant=\"" + $(this).attr('aria-relevant') + "\"</span>");
+			}
+			if ($(this).attr('aria-hidden')) {
+				$(this).after("<span class=\""+closeSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">❓aria-hidden=\"" + $(this).attr('aria-hidden') + "\"❓</span>");
+				$(this).attr('style', 'background-color:black;opacity:0.7;');
 			}
 			if ($(this).attr('aria-describedby')) {
 				$(this).before("<span class=\""+axSpan+"\" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px;speak:literal-punctuation;\">aria-describedby=\"" + $(this).attr('aria-describedby') + "\"</span>");
