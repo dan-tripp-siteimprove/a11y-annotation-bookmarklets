@@ -5,7 +5,7 @@ function main() {
     for(let root of getRootNodesForQuerySelector()) {
         let altSpan = CSS_CLASS_ALTSPAN, axSpan = CSS_CLASS_AXSPAN, closeSpan = CSS_CLASS_CLOSESPAN, 
             inputSpan = CSS_CLASS_INPUTSPAN;
-        $(`.${altSpan}, .${axSpan}, .${closeSpan}`, root).remove();
+        $(`.${CSS_CLASS_GENERAL}, .${altSpan}, .${axSpan}, .${closeSpan}`, root).remove();
         $("a[alt], button[alt], label[alt]", root).each(function() {
             $(this).before(`<span class=\"${altSpan}\"`+" style=\"color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation;\"> INVALID❌alt=\"" + $(this).attr('alt') + "\" on " + $(this).prop("tagName") + "</span>");
         });

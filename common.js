@@ -44,6 +44,9 @@ them.
 are used by the target web page.  
 */
 
+const CSS_CLASS_GENERAL = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_general`;
+
+/* These are legacy.  I don't know why there's several of them instead of just one. */
 const CSS_CLASS_ALTSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_altSpan`;
 const CSS_CLASS_AXSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_axSpan`;
 const CSS_CLASS_OPENSPAN = `class_${UNIQUE_ID_FOR_OUR_BOOKMARKLETS}_openSpan`;
@@ -58,9 +61,12 @@ function showMsg(foundAnyElems_, nouns_) {
 	let msg = foundAnyElems_ 
 		? `Success: one or more ${nouns_} were found on this page` 
 		: `No ${nouns_} were found on this page`;
-	let newMsgElem = $(`<strong role="alert" style="color:black;font-weight:bold;font-family:sans-serif;
-		font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; 
+	let newMsgElem = $(`<strong class="${CSS_CLASS_GENERAL}" role="alert" 
+		style="color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;margin:0 2px; padding:2px; position: fixed; top: 0; 
 		z-index: 9999999" role="status">${msg}</strong>`);
+	/* ^^ the CSS class is there to handle a second bookmarklet run when the message (added by this 
+	function) from the first bookmarklet run is still in the DOM.  it prevents us from adding 
+	an annotation to this, our message element. */
 	$('body').prepend(newMsgElem);
 	let delayInMilliseconds = 6000; 
 	setTimeout(() => { newMsgElem.remove(); }, delayInMilliseconds);
